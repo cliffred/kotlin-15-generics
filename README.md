@@ -8,4 +8,4 @@ Running the main function in Sample.kt results in a NullPointerException. But on
  - Remove @MyAnnotation from MyClass or remove it from allOpen{}
  - Make fooTypeParameter() not suspending
 
-
+See https://youtrack.jetbrains.com/issue/KT-46797
