@@ -1,18 +1,15 @@
 package sample
 
-import kotlinx.coroutines.runBlocking
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
-fun main(): Unit = runBlocking {
+suspend fun main() {
     println(MyClass().fooTypeParameter<String>().typeName)
 }
 
-@MyAnnotation  // No error without this annotation
-class MyClass {
-
-    // No error without suspend
-    suspend fun <T> fooTypeParameter() = reifiedType<Foo<T>>()
+open class MyClass {
+    // Throws NPE onlt when using open AND suspend
+    open suspend fun <T> fooTypeParameter() = reifiedType<Foo<T>>()
 }
 
 class Foo<T>
@@ -24,5 +21,3 @@ inline fun <reified T> reifiedType(): Type {
     val superType = base::class.java.genericSuperclass!!
     return (superType as ParameterizedType).actualTypeArguments.first()!!
 }
-
-annotation class MyAnnotation()
